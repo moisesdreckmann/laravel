@@ -61,7 +61,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm" method="POST" action="" >
+                    <form id="editForm" method="POST" action="">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -106,11 +106,10 @@
     </div>
 
     <div class="mt-4">
-    <a href="{{ url('/') }}" class="btn btn-outline-secondary">
-        ← Voltar para Início
-    </a>
-</div>
-
+        <a href="{{ url('/') }}" class="btn btn-outline-secondary">
+            ← Voltar para Início
+        </a>
+    </div>
 
 </div>
 

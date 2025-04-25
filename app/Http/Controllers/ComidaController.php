@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comida;
-use App\Models\Bebida;
 
 class ComidaController extends Controller
 {
@@ -25,13 +24,13 @@ class ComidaController extends Controller
             'nome' => 'required|string|max:255',
             'preco' => 'required|numeric|min:0',
         ]);
-    
+
         Comida::create([
             'nome' => $request->nome,
             'preco' => $request->preco,
         ]);
-    
-        return redirect()->route('home')->with('success', 'Comida cadastrada com sucesso!');
+
+        return redirect()->route('comidas.index')->with('success', 'Comida cadastrada com sucesso!');
     }
 
     public function edit($id)
@@ -48,40 +47,25 @@ class ComidaController extends Controller
         ]);
 
         $comida = Comida::findOrFail($id);
-        $comida->nome = $request->nome;
-        $comida->preco = $request->preco;
-        $comida->save();
+        $comida->update([
+            'nome' => $request->nome,
+            'preco' => $request->preco,
+        ]);
 
-        return redirect()->route('home')->with('success', 'Comida atualizada com sucesso!');
+        return redirect()->route('comidas.index')->with('success', 'Comida atualizada com sucesso!');
     }
 
-    // Método destroy para deletar uma comida
-
-
-    public function index4()
+    public function confirmDelete($id)
     {
-        $comidas = Comida::all();
-        return view('comidas.index', compact('comidas'));
+        $comida = Comida::findOrFail($id);
+        return view('comidas.confirm-delete', compact('comida'));
     }
 
-    // Mostra a página de confirmação
-// Mostrar página de confirmação
-// Novo método
-public function confirmDelete($id)
-{
-    $comida = Comida::findOrFail($id);
-    return view('comidas.confirm-delete', compact('comida'));
-}
-// Destroy continua igual
-public function destroy($id)
-{
-    $comida = Comida::findOrFail($id);
-    $comida->delete();
+    public function destroy($id)
+    {
+        $comida = Comida::findOrFail($id);
+        $comida->delete();
 
-    return redirect()->route('home')->with('success', 'Comida deletada com sucesso!');
-}
-
-
-
-
+        return redirect()->route('comidas.index')->with('success', 'Comida deletada com sucesso!');
+    }
 }

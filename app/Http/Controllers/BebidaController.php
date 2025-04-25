@@ -11,13 +11,13 @@ class BebidaController extends Controller
     public function index()
     {
         $bebidas = Bebida::all();
-        return view('bebidas.index', compact('bebidas'));
+        return view('bebidas.index', compact('bebidas')); // Aponta para resources/views/bebidas/index.blade.php
     }
 
     // Exibe o formulário de cadastro de bebidas
     public function create()
     {
-        return view('bebidas.create');
+        return view('bebidas.create'); // Aponta para resources/views/bebidas/create.blade.php
     }
 
     // Salva a bebida no banco de dados
@@ -30,14 +30,13 @@ class BebidaController extends Controller
 
         Bebida::create($request->only('nome', 'preco'));
 
-        // Redireciona para a página inicial após cadastro
-        return redirect()->route('home')->with('success', 'Bebida cadastrada com sucesso!');
+        return redirect()->route('bebidas.index')->with('success', 'Bebida cadastrada com sucesso!');
     }
 
     // Exibe o formulário de edição de bebida
     public function edit(Bebida $bebida)
     {
-        return view('bebidas.edit', compact('bebida'));
+        return view('bebidas.edit', compact('bebida')); // Aponta para resources/views/bebidas/edit.blade.php
     }
 
     // Atualiza os dados da bebida
@@ -50,8 +49,7 @@ class BebidaController extends Controller
 
         $bebida->update($request->only('nome', 'preco'));
 
-        // Redireciona para a página inicial após atualização
-        return redirect()->route('home')->with('success', 'Bebida atualizada com sucesso!');
+        return redirect()->route('bebidas.index')->with('success', 'Bebida atualizada com sucesso!');
     }
 
     // Remove a bebida
@@ -59,14 +57,13 @@ class BebidaController extends Controller
     {
         $bebida->delete();
 
-        // Redireciona para a página inicial após exclusão
-        return redirect()->route('home')->with('success', 'Bebida excluída com sucesso!');
+        return redirect()->route('bebidas.index')->with('success', 'Bebida excluída com sucesso!');
     }
 
     // Página de confirmação de exclusão
     public function confirmDelete($id)
     {
         $bebida = Bebida::findOrFail($id);
-        return view('bebidas.confirm-delete', compact('bebida'));
+        return view('bebidas.confirm-delete', compact('bebida')); // Aponta para resources/views/bebidas/confirm-delete.blade.php
     }
 }

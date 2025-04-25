@@ -16,10 +16,16 @@
     @foreach ($usuarios as $usuario)
         <div class="mb-2">
             <p>{{ $usuario->nome }} - {{ $usuario->email }}</p>
-            
+
             <!-- Botões para Alterar e Excluir -->
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" data-usuario-id="{{ $usuario->id }}" data-usuario-nome="{{ $usuario->nome }}" data-usuario-email="{{ $usuario->email }}">Alterar</button>
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-usuario-id="{{ $usuario->id }}" data-usuario-nome="{{ $usuario->nome }}">Excluir</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal"
+                    data-usuario-id="{{ $usuario->id }}"
+                    data-usuario-nome="{{ $usuario->nome }}"
+                    data-usuario-email="{{ $usuario->email }}">Alterar</button>
+
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                    data-usuario-id="{{ $usuario->id }}"
+                    data-usuario-nome="{{ $usuario->nome }}">Excluir</button>
         </div>
     @endforeach
 
@@ -65,7 +71,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm" method="POST" action="" >
+                    <form id="editForm" method="POST" action="">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -77,7 +83,7 @@
                             <input type="email" class="form-control" id="editEmail" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editSenha" class="form-label">Senha</label>
+                            <label for="editSenha" class="form-label">Senha (opcional)</label>
                             <input type="password" class="form-control" id="editSenha" name="senha">
                         </div>
                         <div class="mb-3">
@@ -113,18 +119,15 @@
         </div>
     </div>
 
-</div>
-
-<div class="mt-4">
-    <a href="{{ url('/') }}" class="btn btn-outline-secondary">
-        ← Voltar para Início
-    </a>
+    <div class="mt-4">
+        <a href="{{ url('/') }}" class="btn btn-outline-secondary">← Voltar para Início</a>
     </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Para o Modal de Alterar
+    // Modal de Alterar
     var editModal = document.getElementById('editModal');
     editModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
@@ -132,27 +135,23 @@
         var usuarioNome = button.getAttribute('data-usuario-nome');
         var usuarioEmail = button.getAttribute('data-usuario-email');
 
-        var modalNome = editModal.querySelector('#editNome');
-        var modalEmail = editModal.querySelector('#editEmail');
-        var form = editModal.querySelector('form');
-        form.action = '/usuarios/' + usuarioId;  // URL da alteração
+        editModal.querySelector('#editNome').value = usuarioNome;
+        editModal.querySelector('#editEmail').value = usuarioEmail;
+        editModal.querySelector('#editSenha').value = '';
 
-        modalNome.value = usuarioNome;
-        modalEmail.value = usuarioEmail;
+        var form = editModal.querySelector('#editForm');
+        form.action = '/usuarios/' + usuarioId;
     });
 
-    // Para o Modal de Excluir
+    // Modal de Excluir
     var deleteModal = document.getElementById('deleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
         var usuarioId = button.getAttribute('data-usuario-id');
         var usuarioNome = button.getAttribute('data-usuario-nome');
 
-        var modalUsuarioNome = deleteModal.querySelector('#usuarioNome');
-        modalUsuarioNome.textContent = usuarioNome;
-
-        var form = deleteModal.querySelector('#deleteForm');
-        form.action = '/usuarios/' + usuarioId;
+        deleteModal.querySelector('#usuarioNome').textContent = usuarioNome;
+        deleteModal.querySelector('#deleteForm').action = '/usuarios/' + usuarioId;
     });
 </script>
 

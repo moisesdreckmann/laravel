@@ -12,11 +12,8 @@ class UsuarioController extends Controller
     // Página inicial trazendo tudo
     public function index()
     {
-        $comidas = Comida::all();
-        $bebidas = Bebida::all();
         $usuarios = Usuario::all();
-
-        return view('usuarios.index', compact('comidas', 'bebidas', 'usuarios'));
+        return view('usuarios.index', compact('usuarios'));
     }
 
     // Tela de cadastro do usuário
