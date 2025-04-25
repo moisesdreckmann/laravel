@@ -56,13 +56,7 @@ class ComidaController extends Controller
     }
 
     // Método destroy para deletar uma comida
-    
 
-    public function index3()
-    {
-        $bebidas = Bebida::all();
-        return view('bebidas.index', compact('bebidas'));
-    }
 
     public function index4()
     {
