@@ -16,7 +16,7 @@ class UsuarioController extends Controller
         $bebidas = Bebida::all();
         $usuarios = Usuario::all();
 
-        return view('welcome', compact('comidas', 'bebidas', 'usuarios'));
+        return view('usuarios.index', compact('comidas', 'bebidas', 'usuarios'));
     }
 
     // Tela de cadastro do usuário
@@ -40,7 +40,7 @@ class UsuarioController extends Controller
             'senha' => bcrypt($request->senha),
         ]);
 
-        return redirect()->route('home')->with('success', 'Usuário cadastrado com sucesso!');
+        return redirect()->route('usuarios.index')->with('success', 'Usuário cadastrado com sucesso!');
     }
 
     // Mostrar detalhes de um usuário
@@ -69,19 +69,18 @@ class UsuarioController extends Controller
             'nome' => $request->nome,
         ]);
 
-        return redirect()->route('home')->with('success', 'Usuário atualizado com sucesso!');
+        return redirect()->route('usuarios.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     // Excluir usuário
-    public function destroy($id)
-    {
-        // Encontre o usuário pelo id
-        $usuario = Usuario::findOrFail($id);
+// Excluir usuário
+public function destroy($id)
+{
+    $usuario = Usuario::findOrFail($id);
+    $usuario->delete();
 
-        // Exclua o usuário
-        $usuario->delete();
+    // Corrigido: Redirecionando para a rota 'usuarios.index' corretamente
+    return redirect()->route('usuarios.index')->with('success', 'Usuário excluído com sucesso!');
+}
 
-        // Redirecione para a página inicial com uma mensagem de sucesso
-        return redirect()->route('home')->with('success', 'Usuário excluído com sucesso!');
-    }
 }

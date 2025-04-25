@@ -4,34 +4,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComidaController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\LancheController;
 
-// Página inicial vai direto para listagem de usuários
-Route::get('/', [UsuarioController::class, 'index'])->name('home');
+// Página inicial redireciona para a view principal (index geral)
+Route::get('/', [LancheController::class, 'index']);
 
-// Rotas para usuários (geralmente já vem com resource)
+// =========================
+// ROTAS DE USUÁRIOS
+// =========================
 Route::resource('usuarios', UsuarioController::class);
 
-// Rota para excluir um usuário (DELETE)
-Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
-
-// Rota de confirmação de exclusão de usuário
-Route::get('/usuarios/{id}/confirm-delete', [UsuarioController::class, 'confirmDelete'])->name('usuarios.confirmDelete');
-
-// Rotas para comidas
+// =========================
+// ROTAS DE COMIDAS
+// =========================
 Route::resource('comidas', ComidaController::class);
 
-// Rota para excluir uma comida (DELETE)
-Route::delete('/comidas/{id}', [ComidaController::class, 'destroy'])->name('comidas.destroy');
-
-// Rota de confirmação de exclusão de comida
-Route::get('/comidas/{id}/confirm-delete', [ComidaController::class, 'confirmDelete'])->name('comidas.confirmDelete');
-
-// Rotas para bebidas
+// =========================
+// ROTAS DE BEBIDAS
+// =========================
 Route::resource('bebidas', BebidaController::class);
-// Rota para excluir uma bebida (DELETE)
-Route::delete('/bebidas/{id}', [BebidaController::class, 'destroy'])->name('bebidas.destroy');
-
-// Rota de confirmação de exclusão de bebida
-Route::get('/bebidas/{id}/confirm-delete', [BebidaController::class, 'confirmDelete'])->name('bebidas.confirmDelete');
-
-?>
