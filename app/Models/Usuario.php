@@ -9,5 +9,8 @@ class Usuario extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'email', 'senha'];
+    protected $fillable = ['nome', 'email', 'senha', 'telefone'];
+
+    // Laravel gerencia os timestamps automaticamente
+    public $timestamps = true;
 }
