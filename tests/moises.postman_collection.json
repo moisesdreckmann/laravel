@@ -1,0 +1,640 @@
+{
+	"info": {
+		"_postman_id": "d3be0745-dfc8-40fc-a83c-c8a8344b5351",
+		"name": "moises",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37639345",
+		"_collection_link": "https://lively-satellite-2572.postman.co/workspace/CORRECOES_2025~1bab71c3-a480-43c4-8a6a-a8bcebf7658d/collection/37639345-d3be0745-dfc8-40fc-a83c-c8a8344b5351?action=share&source=collection_link&creator=37639345"
+	},
+	"item": [
+		{
+			"name": "comidas",
+			"item": [
+				{
+					"name": "{comida}",
+					"item": [
+						{
+							"name": "api/comidas/{comida}",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/comidas/:comida",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"comidas",
+										":comida"
+									],
+									"variable": [
+										{
+											"key": "comida",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/comidas/{comida}",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "nome",
+											"value": "bbb",
+											"type": "text"
+										},
+										{
+											"key": "descricao",
+											"value": "bbb",
+											"type": "text"
+										},
+										{
+											"key": "preco",
+											"value": "11",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/comidas/:comida",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"comidas",
+										":comida"
+									],
+									"variable": [
+										{
+											"key": "comida",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/comidas/{comida}",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/comidas/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"comidas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "api/comidas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/comidas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"comidas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/comidas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nome",
+									"value": "asdfasdf",
+									"type": "text"
+								},
+								{
+									"key": "descricao",
+									"value": "sdwerwqaer",
+									"type": "text"
+								},
+								{
+									"key": "preco",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/comidas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"comidas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bebidas",
+			"item": [
+				{
+					"name": "{bebida}",
+					"item": [
+						{
+							"name": "api/bebidas/{bebida}",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/bebidas/:bebida",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bebidas",
+										":bebida"
+									],
+									"variable": [
+										{
+											"key": "bebida"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/bebidas/{bebida}",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "nome",
+											"value": "bbb",
+											"type": "text"
+										},
+										{
+											"key": "descricao",
+											"value": "aaa",
+											"type": "text"
+										},
+										{
+											"key": "preco",
+											"value": "11",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/bebidas/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bebidas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/bebidas/{bebida}",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/bebidas/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bebidas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "api/bebidas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/bebidas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"bebidas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/bebidas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nome",
+									"value": "aaa",
+									"type": "text"
+								},
+								{
+									"key": "descricao",
+									"value": "aaa",
+									"type": "text"
+								},
+								{
+									"key": "preco",
+									"value": "11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bebidas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"bebidas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "api/usuarios/{id}",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/usuarios/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/usuarios/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/usuarios/1?nome=bbb&email=bb@gmail.com&senha=2222222222222222&telefone=1111",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"usuarios",
+										"1"
+									],
+									"query": [
+										{
+											"key": "nome",
+											"value": "bbb"
+										},
+										{
+											"key": "email",
+											"value": "bb@gmail.com"
+										},
+										{
+											"key": "senha",
+											"value": "2222222222222222"
+										},
+										{
+											"key": "telefone",
+											"value": "1111"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/usuarios/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/usuarios/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"usuarios",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "api/usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/usuarios",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/usuarios",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "noms",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "nome",
+									"value": "AAA",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aaa@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "11111111111111111111",
+									"type": "text"
+								},
+								{
+									"key": "telefone",
+									"value": "111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/usuarios",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.request.headers.add({ key: 'accept', value: 'application/json' })\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
