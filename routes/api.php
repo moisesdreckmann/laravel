@@ -34,12 +34,4 @@ Route::middleware('force.json')->group(function () {
     Route::put('usuarios/{id}', [UsuarioController::class, 'update']);
     Route::delete('usuarios/{id}', [UsuarioController::class, 'destroy']);
 
-    // Rota de teste para validar middleware
-    Route::middleware('api')->group(function () {
-    Route::get('comidas', [ComidaController::class, 'index']);
-    // outras rotas...
-});
-Route::middleware(['api.middleware'])->get('/teste', function () {
-    return response()->json(['mensagem' => 'Middleware funcionando!']);
-});
 });
