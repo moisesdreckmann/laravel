@@ -3,81 +3,78 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
-use App\Models\Comida;
-use App\Models\Bebida;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    // Página inicial trazendo tudo
     public function index()
-    {
-        $usuarios = Usuario::all();
-        return view('usuarios.index', compact('usuarios'));
+{
+    $usuarios = \App\Models\Usuario::all();
+
+    if ($usuarios->isEmpty()) {
+        return response('Nenhum usuário encontrado');
     }
 
-    // Tela de cadastro do usuário
+    return view('usuarios.index', compact('usuarios'));
+}
+
     public function create()
     {
         return view('usuarios.create');
     }
 
-    // Salvar usuário no banco
     public function store(Request $request)
     {
-        $request->validate([
-            'nome'  => 'required|string|max:255',
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|string|min:6',
+            'telefone' => 'nullable|string|max:20',
         ]);
 
-        Usuario::create([
-            'nome'  => $request->nome,
-            'email' => $request->email,
-            'senha' => bcrypt($request->senha),
-        ]);
+        $validated['senha'] = bcrypt($validated['senha']);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuário cadastrado com sucesso!');
+        Usuario::create($validated);
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuário criado com sucesso!');
     }
 
-    // Mostrar detalhes de um usuário
-    public function show($id)
+    public function edit(Usuario $usuario)
     {
-        $usuario = Usuario::findOrFail($id);
-        return view('usuarios.show', compact('usuario'));
-    }
-
-    // Tela de edição do usuário
-    public function edit($id)
-    {
-        $usuario = Usuario::findOrFail($id);
         return view('usuarios.edit', compact('usuario'));
     }
 
-    // Atualizar o usuário
-    public function update(Request $request, $id)
+    public function update(Request $request, Usuario $usuario)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email,' . $usuario->id,
+            'senha' => 'nullable|string|min:6',
+            'telefone' => 'nullable|string|max:20',
         ]);
 
-        $usuario = Usuario::findOrFail($id);
-        $usuario->update([
-            'nome' => $request->nome,
-        ]);
+        if (!empty($validated['senha'])) {
+            $validated['senha'] = bcrypt($validated['senha']);
+        } else {
+            unset($validated['senha']);
+        }
+
+        $usuario->update($validated);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
-    // Excluir usuário
-// Excluir usuário
-public function destroy($id)
-{
-    $usuario = Usuario::findOrFail($id);
-    $usuario->delete();
+    public function destroy(Usuario $usuario)
+    {
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuário deletado com sucesso!');
+    }
 
-    // Corrigido: Redirecionando para a rota 'usuarios.index' corretamente
-    return redirect()->route('usuarios.index')->with('success', 'Usuário excluído com sucesso!');
-}
+    public function show($id)
+    {
+        $usuario = Usuario::with('pedidos.comida')->findOrFail($id);
+        return view('usuarios.show', compact('usuario'));
+    }
 
+    
 }

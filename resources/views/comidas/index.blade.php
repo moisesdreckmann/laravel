@@ -2,84 +2,120 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciar Comidas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <title>Usuários e Comidas para Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<div class="container mt-4">
-    <h1>Gerenciar Comidas</h1>
-    <a href="{{ route('comidas.create') }}" class="btn btn-primary mb-4">Cadastrar Nova Comida</a>
-    
-    <!-- Lista de comidas -->
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($comidas as $comida)
-                <tr>
-                    <td>{{ $comida->nome }}</td>
-                    <td>{{ $comida->descricao }}</td>
-                    <td>R$ {{ number_format($comida->preco, 2, ',', '.') }}</td>
-                    <td>
-                        <a href="{{ route('comidas.edit', $comida->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                            data-comida-id="{{ $comida->id }}" data-comida-nome="{{ $comida->nome }}">Excluir</button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+<div class="container py-5">
+    <h1 class="mb-4">👥 Usuários e Comidas para Comprar</h1>
 
-<!-- Modal de Confirmação de Exclusão -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    {{-- Botão para abrir modal de criação --}}
+    <button class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#modalCriarComida">
+        + Criar nova comida
+    </button>
+
+    @if($usuarios->isEmpty())
+        <div class="alert alert-info">Nenhum usuário cadastrado.</div>
+    @endif
+
+    @if($comidas->isEmpty())
+        <div class="alert alert-warning">Nenhuma comida disponível para compra.</div>
+    @endif
+
+    @foreach($usuarios as $usuario)
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ $usuario->nome }}</strong> — {{ $usuario->email }}
+                </div>
+                <div>
+                    <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn btn-warning btn-sm me-2">Alterar</a>
+                    <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Deseja mesmo excluir este usuário?')">Deletar</button>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-                Tem certeza que deseja excluir a comida "<span id="comidaNome"></span>"?
-            </div>
-            <div class="modal-footer">
-                <form id="deleteForm" method="POST" action="" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Excluir</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                </form>
+            <div class="card-body">
+                <h5>Comidas disponíveis para compra:</h5>
+                <div class="row">
+                    @foreach($comidas as $comida)
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="card-title">{{ $comida->nome }}</h6>
+                                    <p class="card-text">Preço: R$ {{ number_format($comida->preco ?? 0, 2, ',', '.') }}</p>
+
+                                    <div class="mt-auto">
+                                        {{-- Formulário POST para comprar comida --}}
+                                        <form action="{{ route('comprar.comida') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <input type="hidden" name="usuario_id" value="{{ $usuario->id }}">
+                                            <input type="hidden" name="comida_id" value="{{ $comida->id }}">
+                                            <button type="submit" class="btn btn-primary btn-sm mb-2">Comprar</button>
+                                        </form>
+
+                                        <a href="{{ route('comidas.edit', $comida->id) }}" class="btn btn-warning btn-sm me-1">Alterar</a>
+
+                                        <form action="{{ route('comidas.destroy', $comida->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" onclick="return confirm('Deseja mesmo excluir esta comida?')">Deletar</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
+    @endforeach
+
+    <div class="mt-4">
+        <a href="{{ route('home') }}" class="btn btn-secondary">← Voltar para o Início</a>
     </div>
 </div>
 
-<div class="mt-4">
-    <a href="{{ url('/') }}" class="btn btn-outline-secondary">
-        ← Voltar para Início
-    </a>
+<!-- Modal Criar Comida -->
+<div class="modal fade" id="modalCriarComida" tabindex="-1" aria-labelledby="modalCriarComidaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ route('comidas.store') }}" method="POST" class="modal-content">
+      @csrf
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCriarComidaLabel">Criar Nova Comida</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="preco" class="form-label">Preço</label>
+          <input type="number" step="0.01" min="0" class="form-control" id="preco" name="preco" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Atualiza dinamicamente o form de exclusão no modal
-    var deleteModal = document.getElementById('deleteModal');
-    deleteModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var comidaId = button.getAttribute('data-comida-id');
-        var comidaNome = button.getAttribute('data-comida-nome');
-
-        document.getElementById('comidaNome').textContent = comidaNome;
-        document.getElementById('deleteForm').action = '/comidas/' + comidaId;
-    });
-</script>
 
 </body>
 </html>

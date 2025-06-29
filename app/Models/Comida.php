@@ -11,3 +11,4 @@ class Comida extends Model
 
     protected $fillable = ['nome', 'descricao', 'preco'];
 }
+

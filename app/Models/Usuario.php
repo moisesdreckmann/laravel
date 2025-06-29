@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pedido;
 
 class Usuario extends Model
 {
@@ -11,6 +12,11 @@ class Usuario extends Model
 
     protected $fillable = ['nome', 'email', 'senha', 'telefone'];
 
-    // Laravel gerencia os timestamps automaticamente
     public $timestamps = true;
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class, 'usuario_id');
+    }
 }
+

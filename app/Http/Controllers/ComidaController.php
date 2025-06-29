@@ -8,64 +8,29 @@ use App\Models\Comida;
 class ComidaController extends Controller
 {
     public function index()
-    {
-        $comidas = Comida::all();
-        return view('comidas.index', compact('comidas'));
-    }
+{
+    $comidas = Comida::all();
+    $usuarios = \App\Models\Usuario::all(); // adicione isso se for realmente necessário na view
 
-    public function create()
-    {
-        return view('comidas.create');
-    }
+    return view('comidas.index', compact('comidas', 'usuarios'));
+}
 
     public function store(Request $request)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
             'preco' => 'required|numeric|min:0',
         ]);
 
         Comida::create([
             'nome' => $request->nome,
+            'descricao' => $request->descricao,
             'preco' => $request->preco,
         ]);
 
-        return redirect()->route('comidas.index')->with('success', 'Comida cadastrada com sucesso!');
+        return redirect()->route('comidas.index')->with('success', 'Comida criada com sucesso!');
     }
 
-    public function edit($id)
-    {
-        $comida = Comida::findOrFail($id);
-        return view('comidas.edit', compact('comida'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nome' => 'required|string',
-            'preco' => 'required|numeric',
-        ]);
-
-        $comida = Comida::findOrFail($id);
-        $comida->update([
-            'nome' => $request->nome,
-            'preco' => $request->preco,
-        ]);
-
-        return redirect()->route('comidas.index')->with('success', 'Comida atualizada com sucesso!');
-    }
-
-    public function confirmDelete($id)
-    {
-        $comida = Comida::findOrFail($id);
-        return view('comidas.confirm-delete', compact('comida'));
-    }
-
-    public function destroy($id)
-    {
-        $comida = Comida::findOrFail($id);
-        $comida->delete();
-
-        return redirect()->route('comidas.index')->with('success', 'Comida deletada com sucesso!');
-    }
+    // Você pode adicionar outros métodos (create, edit, update, destroy) aqui
 }

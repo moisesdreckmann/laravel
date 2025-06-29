@@ -9,5 +9,10 @@ class Bebida extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'descricao', 'preco'];
+    protected $fillable = ['nome', 'descricao', 'preco', 'estoque'];
+
+    public function comidas()
+    {
+        return $this->hasMany(Comida::class);
+    }
 }
