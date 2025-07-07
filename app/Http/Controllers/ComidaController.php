@@ -8,29 +8,50 @@ use App\Models\Comida;
 class ComidaController extends Controller
 {
     public function index()
-{
-    $comidas = Comida::all();
-    $usuarios = \App\Models\Usuario::all(); // adicione isso se for realmente necessário na view
+    {
+        $comidas = Comida::all();
+        $usuarios = \App\Models\Usuario::all();
 
-    return view('comidas.index', compact('comidas', 'usuarios'));
-}
+        return view('comidas.index', compact('comidas', 'usuarios'));
+    }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric|min:0',
+            'tem_bebida_gratis' => 'sometimes|boolean',
         ]);
 
-        Comida::create([
-            'nome' => $request->nome,
-            'descricao' => $request->descricao,
-            'preco' => $request->preco,
-        ]);
+        $data['tem_bebida_gratis'] = $request->has('tem_bebida_gratis');
+
+        Comida::create($data);
 
         return redirect()->route('comidas.index')->with('success', 'Comida criada com sucesso!');
     }
 
-    // Você pode adicionar outros métodos (create, edit, update, destroy) aqui
+    public function edit(Comida $comida)
+    {
+        return view('comidas.edit', compact('comida'));
+    }
+
+    public function update(Request $request, Comida $comida)
+    {
+        $data = $request->validate([
+            'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+            'preco' => 'required|numeric|min:0',
+            'tem_bebida_gratis' => 'sometimes|boolean',
+        ]);
+
+        $data['tem_bebida_gratis'] = $request->has('tem_bebida_gratis');
+
+        $comida->update($data);
+
+        return redirect()->route('comidas.index')->with('success', 'Comida atualizada com sucesso!');
+    }
+
+    // Você pode adicionar destroy, create, etc., se quiser
 }
+

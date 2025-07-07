@@ -11,10 +11,6 @@ class UsuarioController extends Controller
 {
     $usuarios = \App\Models\Usuario::all();
 
-    if ($usuarios->isEmpty()) {
-        return response('Nenhum usuário encontrado');
-    }
-
     return view('usuarios.index', compact('usuarios'));
 }
 

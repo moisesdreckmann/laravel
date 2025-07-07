@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('comidas', function (Blueprint $table) {
@@ -16,18 +13,15 @@ return new class extends Migration
             $table->string('nome');
             $table->text('descricao')->nullable();
             $table->decimal('preco', 8, 2);
-            $table->string('categoria')->nullable(); // exemplo: lanche, bebida, sobremesa
+            $table->boolean('tem_bebida_gratis'); 
+            $table->string('categoria')->nullable(); 
             $table->boolean('disponivel')->default(true);
-            $table->timestamps(); // inclui created_at e updated_at
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('comidas');
     }
 };
-

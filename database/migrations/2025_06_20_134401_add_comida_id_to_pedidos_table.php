@@ -8,16 +8,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('pedidos', function (Blueprint $table) {
-            $table->foreignId('comida_id')->after('usuario_id')
-                  ->constrained('comidas')
-                  ->cascadeOnDelete();
+            $table->boolean('bebida_gratis')->after('comida_id');
         });
     }
 
     public function down(): void
     {
         Schema::table('pedidos', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('comida_id');
+            $table->dropColumn('bebida_gratis');
         });
     }
 };

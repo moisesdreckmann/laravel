@@ -14,7 +14,6 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    {{-- Botão para abrir modal de criação --}}
     <button class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#modalCriarComida">
         + Criar nova comida
     </button>
@@ -52,8 +51,11 @@
                                     <h6 class="card-title">{{ $comida->nome }}</h6>
                                     <p class="card-text">Preço: R$ {{ number_format($comida->preco ?? 0, 2, ',', '.') }}</p>
 
+                                    @if($comida->tem_bebida_gratis)
+                                        <p class="text-success">🍹 Bebida grátis incluída!</p>
+                                    @endif
+
                                     <div class="mt-auto">
-                                        {{-- Formulário POST para comprar comida --}}
                                         <form action="{{ route('comprar.comida') }}" method="POST" class="d-inline">
                                             @csrf
                                             <input type="hidden" name="usuario_id" value="{{ $usuario->id }}">
@@ -105,6 +107,14 @@
         <div class="mb-3">
           <label for="preco" class="form-label">Preço</label>
           <input type="number" step="0.01" min="0" class="form-control" id="preco" name="preco" required>
+        </div>
+
+        <!-- Checkbox bebida grátis -->
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" value="1" id="tem_bebida_gratis" name="tem_bebida_gratis">
+          <label class="form-check-label" for="tem_bebida_gratis">
+            Esta comida dá direito a uma bebida grátis 🥤
+          </label>
         </div>
       </div>
       <div class="modal-footer">

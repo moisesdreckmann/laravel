@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pedido;
-use App\Models\Usuario;
+use App\Models\Comida;
 
 class PedidoController extends Controller
 {
@@ -15,25 +15,22 @@ class PedidoController extends Controller
             'comida_id' => 'required|exists:comidas,id',
         ]);
 
+        // ✅ Buscar a comida
+        $comida = Comida::findOrFail($request->comida_id);
+
+        // ✅ Usar o valor real da comida
         Pedido::create([
             'usuario_id' => $request->usuario_id,
-            'comida_id' => $request->comida_id,
+            'comida_id' => $comida->id,
+            'bebida_gratis' => $comida->tem_bebida_gratis ? 1 : 0,
         ]);
 
         return back()->with('success', 'Pedido realizado com sucesso!');
     }
 
-    public function pedidosPorUsuario(Usuario $usuario)
-    {
-        $pedidos = Pedido::where('usuario_id', $usuario->id)->get();
-
-        return view('pedidos.index', compact('usuario', 'pedidos'));
-    }
-
     public function index()
-{
-    $pedidos = \App\Models\Pedido::with(['usuario', 'comida'])->get();
-
-    return view('pedidos.index', compact('pedidos'));
-}
+    {
+        $pedidos = Pedido::with(['usuario', 'comida'])->get();
+        return view('pedidos.index', compact('pedidos'));
+    }
 }
